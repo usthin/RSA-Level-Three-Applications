@@ -51,7 +51,9 @@ def sign(message, private_key):
 def verify(message, signature, public_key):
     n, e = public_key
 
-    h_original = hash_message(message)
+    # IMPORTANT: reduce hash modulo n
+    h_original = hash_message(message) % n
+
     h_from_signature = pow(signature, e, n)
 
     return h_original == h_from_signature
